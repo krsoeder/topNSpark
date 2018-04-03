@@ -1,0 +1,10 @@
+*.class
+*.log
+*.jar
+*.gz
+.classpath
+*.DS*
+/target
+.project
+.settings*
+*spark-2.3.0*
