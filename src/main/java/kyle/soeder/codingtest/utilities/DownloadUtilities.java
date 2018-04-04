@@ -23,7 +23,7 @@ public class DownloadUtilities {
 	 *             - if there are any issues reading the external file or writing
 	 *             the new file this error will get thrown up to the main class.
 	 */
-	public static boolean downloadFile(String ftpSite, String outputFileLocation)
+	public final static boolean downloadFile(String ftpSite, String outputFileLocation)
 			throws IOException {
 		boolean success = false;
 		BufferedInputStream in = null;

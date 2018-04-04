@@ -13,9 +13,9 @@ import org.apache.log4j.Logger;
 import scala.Tuple2;
 
 public class FileUtilities {
-	private static Logger logger = Logger.getLogger(FileUtilities.class);
+	private final static Logger logger = Logger.getLogger(FileUtilities.class);
 
-	public static void cleanupFile(String fileLocation) {
+	public final static void cleanupFile(String fileLocation) {
 		final File file = new File(fileLocation);
 		logger.debug("Cleaning up file");
 		if (file.delete()) {
@@ -32,8 +32,8 @@ public class FileUtilities {
 	 * @return boolean for success or failure.
 	 * @throws IOException
 	 */
-	public static boolean writeToFile(String outputFileName, List<Tuple2<String, ArrayList<Tuple2<
-			String, Integer>>>> data, String dataType) throws IOException {
+	public final static boolean writeToFile(String outputFileName, List<Tuple2<String, ArrayList<
+			Tuple2<String, Integer>>>> data, String dataType) throws IOException {
 		BufferedWriter bw = null;
 		try {
 			final File fout = new File(outputFileName);

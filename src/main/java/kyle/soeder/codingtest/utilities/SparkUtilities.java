@@ -28,7 +28,7 @@ public class SparkUtilities implements Serializable {
 	 * @param sparkMaster
 	 * @throws IOException
 	 */
-	public static void findTopN(String fileLocation, int topN, String sparkMaster,
+	public final static void findTopN(String fileLocation, int topN, String sparkMaster,
 			String userResultFile, String urlResultFile) throws IOException {
 		final String appName = "TopNCalculator";
 		final SparkSession spark = SparkSession.builder().master(sparkMaster).appName(appName)
@@ -101,7 +101,7 @@ public class SparkUtilities implements Serializable {
 	 * @param inputStringRows
 	 * @return
 	 */
-	private static JavaRDD<LogEntry> parseLogs(JavaRDD<String> inputStringRows) {
+	private final static JavaRDD<LogEntry> parseLogs(JavaRDD<String> inputStringRows) {
 		return inputStringRows.map(new Function<String, LogEntry>() {
 			private static final long serialVersionUID = 1L;
 
@@ -119,7 +119,7 @@ public class SparkUtilities implements Serializable {
 	 * @param inputStringRows
 	 * @return
 	 */
-	private static JavaPairRDD<Tuple2<String, String>, Integer> getUserCountsLogs(JavaRDD<
+	private final static JavaPairRDD<Tuple2<String, String>, Integer> getUserCountsLogs(JavaRDD<
 			LogEntry> inputEntries) {
 		return inputEntries.map(Mappers.userMapper).mapToPair(s -> new Tuple2<>(new Tuple2<>(s._1(),
 				s._2()), s._3())).reduceByKey((i1, i2) -> i1 + i2);
@@ -132,7 +132,7 @@ public class SparkUtilities implements Serializable {
 	 * @param inputStringRows
 	 * @return
 	 */
-	private static JavaPairRDD<Tuple2<String, String>, Integer> getUrlCountsLogs(JavaRDD<
+	private final static JavaPairRDD<Tuple2<String, String>, Integer> getUrlCountsLogs(JavaRDD<
 			LogEntry> inputEntries) {
 		return inputEntries.map(Mappers.urlMapper).mapToPair(s -> new Tuple2<>(new Tuple2<>(s._1(),
 				s._2()), s._3())).reduceByKey((i1, i2) -> i1 + i2);
@@ -145,7 +145,7 @@ public class SparkUtilities implements Serializable {
 	 * @param dayToDataCount
 	 * @return
 	 */
-	private static JavaPairRDD<String, ArrayList<Tuple2<String, Integer>>> getListsForEachDay(
+	private final static JavaPairRDD<String, ArrayList<Tuple2<String, Integer>>> getListsForEachDay(
 			JavaRDD<Tuple3<String, String, Integer>> dayToDataCount) {
 		return dayToDataCount.mapToPair(s -> new Tuple2<>(s._1(), new ArrayList<>(Arrays.asList(
 				new Tuple2<>(s._2(), s._3()))))).reduceByKey((i1, i2) -> {
