@@ -6,12 +6,19 @@ Change Docker VM Settings to minimum 6GB memory for this cluster.
 
 In first terminal:
 
-docker build -f spark.df -t spark .
 
-docker-compose up
+2) In the project directory navigate to docker directory
+
+	Execute the following commands:
+	
+3) docker build -f spark.df -t spark .
+
+4) docker-compose up
 
 
 In second terminal:
+
+Navigate to project directory 
 
 1) docker container ls
 
