@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class LogEntry implements Serializable {
 
-	String user;
-	String timestamp;
-	String url;
-	int httpReply;
-	long byteReply;
+	private String user;
+	private String timestamp;
+	private String url;
+	private int httpReply;
+	private long byteReply;
 
 	/**
 	 * This will parse a string log entry and turn it into a usable log entry

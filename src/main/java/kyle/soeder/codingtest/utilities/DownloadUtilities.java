@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.apache.log4j.Logger;
+
 public class DownloadUtilities {
+	final private static Logger logger = Logger.getLogger(DownloadUtilities.class);
+
 	/**
 	 * This is the helper method used to download the zip file from an external ftp
 	 * site.
@@ -32,13 +36,13 @@ public class DownloadUtilities {
 
 			out = new FileOutputStream(outputFileLocation);
 
-			System.out.println("Downloading file located at " + ftpSite);
+			logger.debug("Downloading file located at " + ftpSite);
 			final byte[] readBytes = new byte[1024];
 			int bytesRead = -1;
 			while ((bytesRead = (in.read(readBytes))) >= 0) {
 				out.write(readBytes, 0, bytesRead);
 			}
-			System.out.println("Completed file download, file is located at " + outputFileLocation);
+			logger.debug("Completed file download, file is located at " + outputFileLocation);
 			success = true;
 		} finally {
 			if (in != null) {

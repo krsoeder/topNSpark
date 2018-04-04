@@ -9,7 +9,7 @@ import kyle.soeder.codingtest.utilities.FileUtilities;
 import kyle.soeder.codingtest.utilities.SparkUtilities;
 
 public class TopNMostFrequentVisitors {
-	final static Logger logger = Logger.getLogger(TopNMostFrequentVisitors.class);
+	final private static Logger logger = Logger.getLogger(TopNMostFrequentVisitors.class);
 
 	public static void main(String[] args) {
 		// Site to download data from e.g.
