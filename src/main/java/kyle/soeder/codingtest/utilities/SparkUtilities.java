@@ -1,10 +1,12 @@
 package kyle.soeder.codingtest.utilities;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
@@ -15,22 +17,26 @@ import scala.Tuple2;
 import scala.Tuple3;
 
 public class SparkUtilities implements Serializable {
+	private static Logger logger = Logger.getLogger(SparkUtilities.class);
 
 	/**
 	 * Main spark call to perform the calculation for top N User and Urls by day for
 	 * given dataset.
-	 * 
+	 *
 	 * @param fileLocation
 	 * @param topN
 	 * @param sparkMaster
+	 * @throws IOException
 	 */
-	public static void findTopN(String fileLocation, int topN, String sparkMaster) {
-		final SparkSession spark = SparkSession.builder().master(sparkMaster).appName(
-				"TopNCalculator").getOrCreate();
+	public static void findTopN(String fileLocation, int topN, String sparkMaster,
+			String userResultFile, String urlResultFile) throws IOException {
+		final String appName = "TopNCalculator";
+		final SparkSession spark = SparkSession.builder().master(sparkMaster).appName(appName)
+				.getOrCreate();
 
 		// Read in data from file system into RDD
 		final JavaRDD<String> textFile = spark.read().textFile(fileLocation).javaRDD();
-		System.out.println("Row count is : " + textFile.count());
+		logger.debug("Number of rows read from file: " + textFile.count());
 
 		// Parse the information out of the logs into LogEntry Objects
 		final JavaRDD<LogEntry> parseLogs = parseLogs(textFile);
@@ -52,10 +58,12 @@ public class SparkUtilities implements Serializable {
 				.map(row -> new Tuple3<>(row._1, row._2, topN)).map(Mappers.topNMapper).collect();
 
 		// Output result data for users
+		FileUtilities.writeToFile(userResultFile, topNUsers, "User");
+
 		for (final Tuple2<String, ArrayList<Tuple2<String, Integer>>> user : topNUsers) {
-			System.out.println("Day " + user._1());
+			logger.debug("Day " + user._1());
 			for (final Tuple2<String, Integer> userDay : user._2) {
-				System.out.println("    User   " + userDay._1() + "   count   " + userDay._2());
+				logger.debug("    User   " + userDay._1() + "   count   " + userDay._2());
 			}
 		}
 
@@ -75,10 +83,12 @@ public class SparkUtilities implements Serializable {
 				row -> new Tuple3<>(row._1, row._2, topN)).map(Mappers.topNMapper).collect();
 
 		// Output result data for urls
+		FileUtilities.writeToFile(urlResultFile, topNUrls, "URL");
+
 		for (final Tuple2<String, ArrayList<Tuple2<String, Integer>>> user : topNUrls) {
-			System.out.println("Day " + user._1());
+			logger.debug("Day " + user._1());
 			for (final Tuple2<String, Integer> userDay : user._2) {
-				System.out.println("    User   " + userDay._1() + "   count   " + userDay._2());
+				logger.debug("    URL   " + userDay._1() + "   count   " + userDay._2());
 			}
 		}
 

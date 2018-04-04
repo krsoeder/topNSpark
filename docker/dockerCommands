@@ -1,0 +1,4 @@
+docker build -f spark.df -t spark .
+docker-compose up
+docker cp target/code-test-0.0.1-SNAPSHOT.jar 9a19b6dda2e5:/usr/local/spark-2.3.0-bin-hadoop2.7/jars/code-test-0.0.1-SNAPSHOT.jar
+java -cp /usr/local/spark-2.3.0-bin-hadoop2.7/jars/code-test-0.0.1-SNAPSHOT.jar:/usr/local/spark-2.3.0-bin-hadoop2.7/jars/* kyle.soeder.codingtest.TopNMostFrequentVisitors http://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz NASA_access_log_Jul95.gz 10 spark://spark-master:7077 userresults urlresults

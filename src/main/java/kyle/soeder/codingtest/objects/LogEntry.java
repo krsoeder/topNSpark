@@ -13,7 +13,8 @@ public class LogEntry implements Serializable {
 	/**
 	 * This will parse a string log entry and turn it into a usable log entry
 	 * object. The parsing is performed with 2 splits based on the data looking as
-	 * such "user - - [timestamp] "CALL url METHOD" httpReply bytesReply"
+	 * such "user - - [DD/mon/YYYY:HH:MM:SS offset] "CALL url METHOD" httpReply
+	 * bytesReply" We are just nulling out bad data for this exercise.
 	 *
 	 * @param logEntry
 	 */
