@@ -6,6 +6,7 @@ Change Docker VM Settings to minimum 6GB memory for this cluster.
 
 In first terminal:
 
+1) Navigate to project directory 
 
 2) In the project directory navigate to docker directory
 
@@ -18,22 +19,22 @@ In first terminal:
 
 In second terminal:
 
-Navigate to project directory 
+1) Navigate to project directory 
 
-1) docker container ls
+2) docker container ls
 
 (Retreive spark docker container id from list of containers running )
 
-2) docker exec -it <spark docker container id> sbin/start-slave.sh spark://spark-master:7077
+3) docker exec -it <spark docker container id> sbin/start-slave.sh spark://spark-master:7077
 
-3) docker cp docker/code-test-0.0.1-SNAPSHOT.jar <spark docker container id>:/usr/local/spark-2.3.0-bin-hadoop2.7/jars/code-test-0.0.1-SNAPSHOT.jar
+4) docker cp docker/code-test-0.0.1-SNAPSHOT.jar <spark docker container id>:/usr/local/spark-2.3.0-bin-hadoop2.7/jars/code-test-0.0.1-SNAPSHOT.jar
 
-4) docker exec -it <spark docker container id> java -cp jars/code-test-0.0.1-SNAPSHOT.jar:jars/* kyle.soeder.codingtest.TopNMostFrequentVisitors http://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz NASA_access_log_Jul95.gz <topNValue> spark://spark-master:7077 userresults urlresults
+5) docker exec -it <spark docker container id> java -cp jars/code-test-0.0.1-SNAPSHOT.jar:jars/* kyle.soeder.codingtest.TopNMostFrequentVisitors http://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz NASA_access_log_Jul95.gz <topNValue> spark://spark-master:7077 userresults urlresults
 
 	NOTE: <topNValue> is an integer less than 50
 
-5) docker cp <spark docker container id>:/usr/local/spark-2.3.0-bin-hadoop2.7/urlresults docker/urlresults
+6) docker cp <spark docker container id>:/usr/local/spark-2.3.0-bin-hadoop2.7/urlresults docker/urlresults
 
-6) docker cp <spark docker container id>:/usr/local/spark-2.3.0-bin-hadoop2.7/userresults docker/userresults
+7) docker cp <spark docker container id>:/usr/local/spark-2.3.0-bin-hadoop2.7/userresults docker/userresults
 
 your results from the run are now in the docker folder on your local machine. verify they look correct. 
