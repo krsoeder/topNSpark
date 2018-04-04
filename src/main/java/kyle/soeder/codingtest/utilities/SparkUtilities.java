@@ -17,7 +17,7 @@ import scala.Tuple2;
 import scala.Tuple3;
 
 public class SparkUtilities implements Serializable {
-	private static Logger logger = Logger.getLogger(SparkUtilities.class);
+	private final static Logger logger = Logger.getLogger(SparkUtilities.class);
 
 	/**
 	 * Main spark call to perform the calculation for top N User and Urls by day for
